@@ -14,7 +14,7 @@ user-defaults
 About
 -----
 
-Code example for the [Better NSUserDefaults with Swift](http://www.xs-labs.com/en/blog/2017/10/08/better-nsuserdefaults-with-swift/) article.
+Code examples for the [Better NSUserDefaults with Swift](http://www.xs-labs.com/en/blog/2017/10/08/better-nsuserdefaults-with-swift/) article.
 
 License
 -------

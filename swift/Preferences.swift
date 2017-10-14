@@ -36,12 +36,10 @@ import Cocoa
     {
         super.init()
         
-        guard let path = Bundle.main.path( forResource: "Defaults", ofType: "plist" ) else
+        if let path = Bundle.main.path( forResource: "Defaults", ofType: "plist" )
         {
-            return
+            UserDefaults.standard.register( defaults: NSDictionary( contentsOfFile: path ) as? [ String : Any ] ?? [ : ] )
         }
-        
-        UserDefaults.standard.register( defaults: NSDictionary( contentsOfFile: path ) as? [ String : Any ] ?? [ : ] )
         
         for c in Mirror( reflecting: self ).children
         {

@@ -64,6 +64,9 @@ NS_ASSUME_NONNULL_END
 
 - ( instancetype )init
 {
+    NSString     * path;
+    NSDictionary * defaults;
+    
     if( self.inited )
     {
         return self;
@@ -73,11 +76,15 @@ NS_ASSUME_NONNULL_END
     {
         self.inited = YES;
         
+        path     = [ [ NSBundle mainBundle ] pathForResource: @"Defaults" ofType: @"plist" ];
+        defaults = [ NSDictionary dictionaryWithContentsOfFile: path ];
+        
         {
             unsigned int                   i;
             objc_property_t              * list;
             NSString                     * name;
             NSMutableArray< NSString * > * properties;
+            id                             value;
             
             properties = [ NSMutableArray new ];
             list       = class_copyPropertyList( self.class, &i );
@@ -99,6 +106,14 @@ NS_ASSUME_NONNULL_END
                     }
                     
                     [ properties addObject: name ];
+                    
+                    value = [ [ NSUserDefaults standardUserDefaults ] objectForKey: name ];
+                    
+                    if( value != nil && [ NSPropertyListSerialization propertyList: value isValidForFormat: NSPropertyListXMLFormat_v1_0 ] )
+                    {
+                        [ self setValue: value forKey: name ];
+                    }
+                    
                     [ self addObserver: self forKeyPath: name options: NSKeyValueObservingOptionNew context: NULL ];
                 }
             }

@@ -48,7 +48,11 @@ import Cocoa
                 continue
             }
             
-            self.setValue( UserDefaults.standard.object( forKey: key ), forKey: key )
+            if let value = UserDefaults.standard.object( forKey: key )
+            {
+                self.setValue( value, forKey: key )
+            }
+            
             self.addObserver( self, forKeyPath: key, options: .new, context: nil )
         }
     }
